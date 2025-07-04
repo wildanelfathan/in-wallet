@@ -1,16 +1,17 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 const router = Router();
 
-// Register merchant (simulasi)
-router.post("/register", async (req, res) => {
+router.post("/register", async (req: Request, res: Response) => {
   const { name } = req.body;
-  if (!name) return res.status(400).json({ error: "Nama merchant wajib diisi" });
+  if (!name) {
+    res.status(400).json({ error: "Nama merchant wajib diisi" });
+    return;
+  }
 
   res.json({ message: `Merchant ${name} berhasil didaftarkan (simulasi)` });
 });
 
-// Dashboard merchant (simulasi)
-router.get("/dashboard", async (req, res) => {
+router.get("/dashboard", async (req: Request, res: Response) => {
   res.json({
     merchant: "Toko Kopi Crypto",
     totalSales: "1500.00 USDC",

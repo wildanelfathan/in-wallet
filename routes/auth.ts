@@ -1,17 +1,17 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 const router = Router();
 
-// Simulasi login
-router.post("/login", async (req, res) => {
+router.post("/login", async (req: Request, res: Response) => {
   const { email } = req.body;
-  if (!email) return res.status(400).json({ error: "Email is required" });
+  if (!email) {
+    res.status(400).json({ error: "Email is required" });
+    return;
+  }
 
-  // Di versi nyata nanti: validasi dengan Privy SDK
   res.json({ message: `User ${email} logged in (simulasi)` });
 });
 
-router.get("/me", async (req, res) => {
-  // Simulasi ambil info user
+router.get("/me", async (req: Request, res: Response) => {
   res.json({
     user: {
       id: "user123",

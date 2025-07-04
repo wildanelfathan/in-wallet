@@ -1,22 +1,20 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 const router = Router();
 
-// Cek saldo wallet (simulasi)
-router.get("/balance", async (req, res) => {
+router.get("/balance", async (req: Request, res: Response) => {
   res.json({
     address: "0x123456789abcdef...",
     balance: "100.00 USDC",
   });
 });
 
-// Kirim dana (simulasi)
-router.post("/send", async (req, res) => {
+router.post("/send", async (req: Request, res: Response) => {
   const { to, amount } = req.body;
   if (!to || !amount) {
-    return res.status(400).json({ error: "Tujuan dan jumlah harus diisi" });
+    res.status(400).json({ error: "Tujuan dan jumlah harus diisi" });
+    return;
   }
 
-  // Di versi nyata: transaksi on-chain
   res.json({
     success: true,
     message: `Mengirim ${amount} ke ${to} (simulasi)`,
