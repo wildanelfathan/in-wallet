@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.ts",
-    "start": "node dist/server.js",
-    "prisma": "prisma"
-  },
+  "dev": "nodemon server.ts",
+  "start": "node dist/server.js",
+  "prisma": "prisma",
+  "postinstall": "prisma generate"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
