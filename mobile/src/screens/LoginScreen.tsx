@@ -11,6 +11,7 @@ import {
 import { usePrivy } from '@privy-io/react-auth';
 import { useBiometricLogin, useEnableBiometricLogin } from '../hooks/useBiometricLogin';
 import { Ionicons } from '@expo/vector-icons';
+import TopUpButton from '../components/TopUpButton';
 
 const LoginScreen: React.FC = () => {
   const { login, logout, ready, authenticated, user } = usePrivy();
@@ -25,6 +26,7 @@ const LoginScreen: React.FC = () => {
   const { enableBiometricLogin, disableBiometricLogin } = useEnableBiometricLogin();
 
   const [regularLoginLoading, setRegularLoginLoading] = useState(false);
+  const [showTopUp, setShowTopUp] = useState(false);
 
   useEffect(() => {
     if (ready) {
@@ -54,6 +56,13 @@ const LoginScreen: React.FC = () => {
     await logout();
   };
 
+  const handleTopUp = () => {
+    setShowTopUp(true);
+  };
+
+  // Import TopUpPage component
+  const TopUpPage = require('./TopUpPage').default;
+
   const getBiometricIcon = () => {
     if (Platform.OS === 'ios') {
       return isSupported ? 'ios-finger-print' : 'ios-lock-closed';
@@ -77,6 +86,11 @@ const LoginScreen: React.FC = () => {
   }
 
   if (authenticated && user) {
+    // Show TopUpPage if requested
+    if (showTopUp) {
+      return <TopUpPage />;
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -91,6 +105,13 @@ const LoginScreen: React.FC = () => {
         </View>
 
         <View style={styles.buttonContainer}>
+          <TopUpButton
+            onPress={handleTopUp}
+            title="Top Up Wallet"
+            size="large"
+            variant="primary"
+          />
+
           <TouchableOpacity
             style={styles.button}
             onPress={enableBiometricLogin}
