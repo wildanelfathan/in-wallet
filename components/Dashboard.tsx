@@ -24,6 +24,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [showBalance, setShowBalance] = useState<boolean>(true);
 
   // Format number with thousand separators and currency symbol
   const formatCurrency = (amount: number, currency: string = 'USD'): string => {
@@ -82,6 +83,19 @@ const Dashboard: React.FC<DashboardProps> = ({
   // Refresh balance
   const handleRefresh = (): void => {
     fetchWalletBalance();
+  };
+
+  // Toggle balance visibility
+  const toggleBalanceVisibility = (): void => {
+    setShowBalance(!showBalance);
+  };
+
+  // Mask balance with asterisks
+  const getMaskedBalance = (currency: string): string => {
+    if (currency === 'BTC' || currency === 'ETH' || currency === 'USDC' || currency === 'USDT') {
+      return `••••••• ${currency}`;
+    }
+    return '$•••,•••.••';
   };
 
   // Fetch balance on component mount and when walletId changes
@@ -146,15 +160,33 @@ const Dashboard: React.FC<DashboardProps> = ({
               <div className="balance-info">
                 <div className="primary-balance">
                   <span className="currency-amount">
-                    {formatCurrency(balance, currency)}
+                    {showBalance ? formatCurrency(balance, currency) : getMaskedBalance(currency)}
                   </span>
+                  <button 
+                    onClick={toggleBalanceVisibility}
+                    className="eye-toggle-button"
+                    aria-label={showBalance ? "Hide balance" : "Show balance"}
+                    title={showBalance ? "Hide balance" : "Show balance"}
+                  >
+                    {showBalance ? (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                      </svg>
+                    ) : (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+                      </svg>
+                    )}
+                  </button>
                 </div>
                 
                 {!compact && (
                   <div className="balance-details">
                     <p className="numeric-balance">
                       <span className="label">Amount:</span>
-                      <span className="value">{formatNumber(balance)}</span>
+                      <span className="value">
+                        {showBalance ? formatNumber(balance) : '•••,•••.••'}
+                      </span>
                     </p>
                     
                     <p className="last-updated">
@@ -313,6 +345,10 @@ const Dashboard: React.FC<DashboardProps> = ({
 
         .primary-balance {
           margin-bottom: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
         }
 
         .currency-amount {
@@ -320,6 +356,42 @@ const Dashboard: React.FC<DashboardProps> = ({
           font-weight: 700;
           color: #059669;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .eye-toggle-button {
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 8px;
+          border-radius: 50%;
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 40px;
+          min-height: 40px;
+          opacity: 0.7;
+          color: #059669;
+        }
+
+        .eye-toggle-button svg {
+          width: 24px;
+          height: 24px;
+        }
+
+        .eye-toggle-button:hover {
+          background: rgba(5, 150, 105, 0.1);
+          opacity: 1;
+          transform: scale(1.1);
+        }
+
+        .eye-toggle-button:active {
+          transform: scale(0.95);
+        }
+
+        .eye-toggle-button:focus {
+          outline: 2px solid #059669;
+          outline-offset: 2px;
         }
 
         .balance-details {
@@ -383,6 +455,17 @@ const Dashboard: React.FC<DashboardProps> = ({
 
           .currency-amount {
             font-size: 2rem;
+          }
+
+          .eye-toggle-button {
+            min-width: 36px;
+            min-height: 36px;
+            padding: 6px;
+          }
+
+          .eye-toggle-button svg {
+            width: 20px;
+            height: 20px;
           }
 
           .card-content {
