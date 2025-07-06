@@ -1,11 +1,12 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { PrismaClient } from "@prisma/client";
+
 import authRoutes from "./routes/auth";
 import walletRoutes from "./routes/wallet";
 import merchantRoutes from "./routes/merchant";
 import adminRoutes from "./routes/admin";
-import { PrismaClient } from "@prisma/client";
 
 dotenv.config();
 
@@ -21,4 +22,6 @@ app.use("/api/merchant", merchantRoutes);
 app.use("/api/admin", adminRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
