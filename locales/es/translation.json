@@ -1,0 +1,38 @@
+{
+  "auth": {
+    "emailRequired": "Se requiere correo electrónico",
+    "loginSuccess": "Usuario {{email}} inició sesión (simulación)",
+    "userInfo": "Información del usuario obtenida exitosamente"
+  },
+  "wallet": {
+    "notFound": "Cartera no encontrada",
+    "balanceRetrieved": "Saldo obtenido exitosamente",
+    "invalidInput": "Entrada inválida",
+    "walletNotFound": "Cartera del remitente o receptor no encontrada",
+    "insufficientBalance": "Saldo insuficiente",
+    "transactionSuccess": "Transacción exitosa",
+    "receivedTransactions": "Transacciones recibidas obtenidas exitosamente",
+    "transactionHistory": "Historial de transacciones obtenido exitosamente"
+  },
+  "merchant": {
+    "info": "Información del comerciante obtenida exitosamente",
+    "nameRequired": "Se requiere el nombre del comerciante",
+    "registrationSuccess": "Comerciante {{name}} registrado exitosamente (simulación)",
+    "dashboardInfo": "Información del panel del comerciante obtenida exitosamente"
+  },
+  "admin": {
+    "info": "Información del administrador obtenida exitosamente",
+    "usersRetrieved": "Lista de usuarios obtenida exitosamente",
+    "transactionsRetrieved": "Lista de transacciones obtenida exitosamente"
+  },
+  "server": {
+    "running": "🚀 Servidor ejecutándose en el puerto {{port}}"
+  },
+  "common": {
+    "error": "Ocurrió un error",
+    "success": "Operación exitosa",
+    "notFound": "Recurso no encontrado",
+    "unauthorized": "Acceso no autorizado",
+    "badRequest": "Solicitud incorrecta"
+  }
+}

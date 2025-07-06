@@ -8,6 +8,7 @@ router.get("/users", async (req, res) => {
       { id: "user1", email: "user1@example.com" },
       { id: "user2", email: "user2@example.com" },
     ],
+    message: req.t('admin.usersRetrieved'),
   });
 });
 
@@ -18,6 +19,7 @@ router.get("/transactions", async (req, res) => {
       { from: "0xabc", to: "0xdef", amount: 20 },
       { from: "0x123", to: "0x456", amount: 50 },
     ],
+    message: req.t('admin.transactionsRetrieved'),
   });
 });
 

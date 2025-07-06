@@ -1,0 +1,38 @@
+{
+  "auth": {
+    "emailRequired": "Email is required",
+    "loginSuccess": "User {{email}} logged in (simulation)",
+    "userInfo": "User information retrieved successfully"
+  },
+  "wallet": {
+    "notFound": "Wallet not found",
+    "balanceRetrieved": "Balance retrieved successfully",
+    "invalidInput": "Invalid input",
+    "walletNotFound": "Sender or receiver wallet not found",
+    "insufficientBalance": "Insufficient balance",
+    "transactionSuccess": "Transaction successful",
+    "receivedTransactions": "Received transactions retrieved successfully",
+    "transactionHistory": "Transaction history retrieved successfully"
+  },
+  "merchant": {
+    "info": "Merchant information retrieved successfully",
+    "nameRequired": "Merchant name is required",
+    "registrationSuccess": "Merchant {{name}} successfully registered (simulation)",
+    "dashboardInfo": "Merchant dashboard information retrieved successfully"
+  },
+  "admin": {
+    "info": "Admin information retrieved successfully",
+    "usersRetrieved": "Users list retrieved successfully",
+    "transactionsRetrieved": "Transactions list retrieved successfully"
+  },
+  "server": {
+    "running": "🚀 Server running on port {{port}}"
+  },
+  "common": {
+    "error": "An error occurred",
+    "success": "Operation successful",
+    "notFound": "Resource not found",
+    "unauthorized": "Unauthorized access",
+    "badRequest": "Bad request"
+  }
+}

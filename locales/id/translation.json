@@ -1,0 +1,38 @@
+{
+  "auth": {
+    "emailRequired": "Email diperlukan",
+    "loginSuccess": "Pengguna {{email}} berhasil masuk (simulasi)",
+    "userInfo": "Informasi pengguna berhasil diambil"
+  },
+  "wallet": {
+    "notFound": "Dompet tidak ditemukan",
+    "balanceRetrieved": "Saldo berhasil diambil",
+    "invalidInput": "Input tidak valid",
+    "walletNotFound": "Dompet pengirim atau penerima tidak ditemukan",
+    "insufficientBalance": "Saldo tidak mencukupi",
+    "transactionSuccess": "Transaksi berhasil",
+    "receivedTransactions": "Transaksi yang diterima berhasil diambil",
+    "transactionHistory": "Riwayat transaksi berhasil diambil"
+  },
+  "merchant": {
+    "info": "Informasi merchant berhasil diambil",
+    "nameRequired": "Nama merchant wajib diisi",
+    "registrationSuccess": "Merchant {{name}} berhasil didaftarkan (simulasi)",
+    "dashboardInfo": "Informasi dashboard merchant berhasil diambil"
+  },
+  "admin": {
+    "info": "Informasi admin berhasil diambil",
+    "usersRetrieved": "Daftar pengguna berhasil diambil",
+    "transactionsRetrieved": "Daftar transaksi berhasil diambil"
+  },
+  "server": {
+    "running": "🚀 Server berjalan di port {{port}}"
+  },
+  "common": {
+    "error": "Terjadi kesalahan",
+    "success": "Operasi berhasil",
+    "notFound": "Sumber daya tidak ditemukan",
+    "unauthorized": "Akses tidak diizinkan",
+    "badRequest": "Permintaan buruk"
+  }
+}

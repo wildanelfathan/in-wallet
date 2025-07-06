@@ -4,11 +4,11 @@ const router = Router();
 router.post("/register", async (req: Request, res: Response) => {
   const { name } = req.body;
   if (!name) {
-    res.status(400).json({ error: "Nama merchant wajib diisi" });
+    res.status(400).json({ error: req.t('merchant.nameRequired') });
     return;
   }
 
-  res.json({ message: `Merchant ${name} berhasil didaftarkan (simulasi)` });
+  res.json({ message: req.t('merchant.registrationSuccess', { name }) });
 });
 
 router.get("/dashboard", async (req: Request, res: Response) => {
@@ -16,6 +16,7 @@ router.get("/dashboard", async (req: Request, res: Response) => {
     merchant: "Toko Kopi Crypto",
     totalSales: "1500.00 USDC",
     transactions: 35,
+    message: req.t('merchant.dashboardInfo'),
   });
 });
 

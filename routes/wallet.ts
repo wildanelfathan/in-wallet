@@ -14,10 +14,14 @@ router.get("/balance/:walletId", async (req: Request, res: Response) => {
   });
 
   if (!wallet) {
-    return res.status(404).json({ error: "Wallet not found" });
+    return res.status(404).json({ error: req.t('wallet.notFound') });
   }
 
-  return res.json({ walletId, balance: wallet.balance });
+  return res.json({ 
+    walletId, 
+    balance: wallet.balance, 
+    message: req.t('wallet.balanceRetrieved') 
+  });
 });
 
 // ✅ POST send funds
@@ -26,18 +30,18 @@ router.post("/send", async (req: Request, res: Response) => {
 
   const parsedAmount = parseFloat(amount);
   if (!fromWalletId || !toWalletId || isNaN(parsedAmount) || parsedAmount <= 0) {
-    return res.status(400).json({ error: "Invalid input" });
+    return res.status(400).json({ error: req.t('wallet.invalidInput') });
   }
 
   const sender = await prisma.wallet.findUnique({ where: { id: fromWalletId } });
   const receiver = await prisma.wallet.findUnique({ where: { id: toWalletId } });
 
   if (!sender || !receiver) {
-    return res.status(404).json({ error: "Sender or receiver wallet not found" });
+    return res.status(404).json({ error: req.t('wallet.walletNotFound') });
   }
 
   if (sender.balance < parsedAmount) {
-    return res.status(400).json({ error: "Insufficient balance" });
+    return res.status(400).json({ error: req.t('wallet.insufficientBalance') });
   }
 
   await prisma.wallet.update({
@@ -58,7 +62,10 @@ router.post("/send", async (req: Request, res: Response) => {
     },
   });
 
-  return res.json({ message: "Transaction successful", transaction });
+  return res.json({ 
+    message: req.t('wallet.transactionSuccess'), 
+    transaction 
+  });
 });
 
 // ✅ GET received transactions
@@ -70,7 +77,11 @@ router.get("/received/:walletId", async (req: Request, res: Response) => {
     orderBy: { createdAt: "desc" },
   });
 
-  return res.json({ walletId, received: transactions });
+  return res.json({ 
+    walletId, 
+    received: transactions, 
+    message: req.t('wallet.receivedTransactions') 
+  });
 });
 
 // ✅ GET full transaction history
@@ -87,7 +98,11 @@ router.get("/history/:walletId", async (req: Request, res: Response) => {
     orderBy: { createdAt: "desc" },
   });
 
-  return res.json({ walletId, history: transactions });
+  return res.json({ 
+    walletId, 
+    history: transactions, 
+    message: req.t('wallet.transactionHistory') 
+  });
 });
 
 export default router;
