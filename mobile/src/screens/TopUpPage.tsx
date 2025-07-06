@@ -10,11 +10,13 @@ import {
   SafeAreaView,
   Platform,
   Linking,
+  ScrollView,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { Picker } from '@react-native-picker/picker';
 import { usePrivy } from '@privy-io/react-auth';
 import { Ionicons } from '@expo/vector-icons';
+import FiatToCryptoWidget, { PurchaseResult } from '../components/FiatToCryptoWidget';
 
 // Types
 interface OnRampProvider {
@@ -307,6 +309,39 @@ const TopUpPage: React.FC = () => {
     setSelectedProvider('');
   }, []);
 
+  // Handle purchase success from widget
+  const handlePurchaseSuccess = useCallback((result: PurchaseResult) => {
+    console.log('Purchase successful:', result);
+    
+    // Update any local state or trigger analytics
+    setTopUpResult({
+      success: true,
+      transactionId: result.orderId,
+      amount: result.amount,
+      currency: result.currency,
+    });
+
+    // Show success message
+    Alert.alert(
+      'Purchase Complete! 🎉',
+      `Your ${result.currency} purchase was successful!\n\nTransaction ID: ${result.orderId}\nAmount: ${result.amount} ${result.currency}`,
+      [{ text: 'OK' }]
+    );
+  }, []);
+
+  // Handle purchase error from widget
+  const handlePurchaseError = useCallback((error: string) => {
+    console.error('Purchase failed:', error);
+    
+    setTopUpResult({
+      success: false,
+      error: error,
+    });
+
+    // Error is already handled by the widget with an alert
+    // Just log it here for debugging
+  }, []);
+
   // Render provider card
   const renderProviderCard = useCallback((provider: OnRampProvider) => (
     <TouchableOpacity
@@ -375,10 +410,160 @@ const TopUpPage: React.FC = () => {
         </View>
       )}
 
-      <View style={styles.providersContainer}>
-        <Text style={styles.providersTitle}>Select a Provider</Text>
-        {ON_RAMP_PROVIDERS.map(renderProviderCard)}
-      </View>
+              <ScrollView style={styles.providersContainer} showsVerticalScrollIndicator={false}>
+          <Text style={styles.providersTitle}>Choose Payment Method</Text>
+          
+          {/* Featured Providers */}
+          <View style={styles.featuredProvidersSection}>
+            <Text style={styles.sectionTitle}>Recommended</Text>
+            
+            <View style={styles.providerWidget}>
+              <View style={styles.providerInfo}>
+                <Text style={styles.providerName}>💳 Transak</Text>
+                <Text style={styles.providerDescription}>
+                  Credit/debit cards, bank transfers • 0.99% fee • $30-$10,000
+                </Text>
+              </View>
+              <FiatToCryptoWidget
+                provider="transak"
+                fiatCurrency="USD"
+                cryptoCurrency="ETH"
+                onSuccess={handlePurchaseSuccess}
+                onError={handlePurchaseError}
+                style={styles.widgetButton}
+              />
+            </View>
+
+            <View style={styles.providerWidget}>
+              <View style={styles.providerInfo}>
+                <Text style={styles.providerName}>🚀 Ramp Network</Text>
+                <Text style={styles.providerDescription}>
+                  Bank transfers, instant deposits • 2.9% fee • $5-$20,000
+                </Text>
+              </View>
+              <FiatToCryptoWidget
+                provider="ramp"
+                fiatCurrency="USD"
+                cryptoCurrency="ETH"
+                onSuccess={handlePurchaseSuccess}
+                onError={handlePurchaseError}
+                style={styles.widgetButton}
+              />
+            </View>
+          </View>
+
+          {/* Additional Options */}
+          <View style={styles.additionalOptionsSection}>
+            <Text style={styles.sectionTitle}>Other Options</Text>
+            
+            <View style={styles.optionCard}>
+              <View style={styles.optionIcon}>
+                <Ionicons name="card" size={24} color="#34C759" />
+              </View>
+              <View style={styles.optionContent}>
+                <Text style={styles.optionTitle}>Credit Card</Text>
+                <Text style={styles.optionDescription}>
+                  Instant purchase with Visa, MasterCard
+                </Text>
+              </View>
+              <View style={styles.optionActions}>
+                <FiatToCryptoWidget
+                  provider="transak"
+                  fiatCurrency="USD"
+                  cryptoCurrency="ETH"
+                  onSuccess={handlePurchaseSuccess}
+                  onError={handlePurchaseError}
+                  style={[styles.widgetButton, styles.smallButton]}
+                />
+              </View>
+            </View>
+
+            <View style={styles.optionCard}>
+              <View style={styles.optionIcon}>
+                <Ionicons name="business" size={24} color="#676FFF" />
+              </View>
+              <View style={styles.optionContent}>
+                <Text style={styles.optionTitle}>Bank Transfer</Text>
+                <Text style={styles.optionDescription}>
+                  Lower fees, 1-3 business days
+                </Text>
+              </View>
+              <View style={styles.optionActions}>
+                <FiatToCryptoWidget
+                  provider="ramp"
+                  fiatCurrency="USD"
+                  cryptoCurrency="ETH"
+                  onSuccess={handlePurchaseSuccess}
+                  onError={handlePurchaseError}
+                  style={[styles.widgetButton, styles.smallButton]}
+                />
+              </View>
+            </View>
+          </View>
+
+          {/* Popular Cryptocurrencies */}
+          <View style={styles.cryptoOptionsSection}>
+            <Text style={styles.sectionTitle}>Popular Cryptocurrencies</Text>
+            
+            <View style={styles.cryptoGrid}>
+              <TouchableOpacity style={styles.cryptoCard}>
+                <Text style={styles.cryptoEmoji}>⚡</Text>
+                <Text style={styles.cryptoSymbol}>ETH</Text>
+                <Text style={styles.cryptoName}>Ethereum</Text>
+                <FiatToCryptoWidget
+                  provider="transak"
+                  fiatCurrency="USD"
+                  cryptoCurrency="ETH"
+                  onSuccess={handlePurchaseSuccess}
+                  onError={handlePurchaseError}
+                  style={[styles.widgetButton, styles.cryptoButton]}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.cryptoCard}>
+                <Text style={styles.cryptoEmoji}>₿</Text>
+                <Text style={styles.cryptoSymbol}>BTC</Text>
+                <Text style={styles.cryptoName}>Bitcoin</Text>
+                <FiatToCryptoWidget
+                  provider="transak"
+                  fiatCurrency="USD"
+                  cryptoCurrency="BTC"
+                  onSuccess={handlePurchaseSuccess}
+                  onError={handlePurchaseError}
+                  style={[styles.widgetButton, styles.cryptoButton]}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.cryptoCard}>
+                <Text style={styles.cryptoEmoji}>💰</Text>
+                <Text style={styles.cryptoSymbol}>USDC</Text>
+                <Text style={styles.cryptoName}>USD Coin</Text>
+                <FiatToCryptoWidget
+                  provider="transak"
+                  fiatCurrency="USD"
+                  cryptoCurrency="USDC"
+                  onSuccess={handlePurchaseSuccess}
+                  onError={handlePurchaseError}
+                  style={[styles.widgetButton, styles.cryptoButton]}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.cryptoCard}>
+                <Text style={styles.cryptoEmoji}>🔷</Text>
+                <Text style={styles.cryptoSymbol}>MATIC</Text>
+                <Text style={styles.cryptoName}>Polygon</Text>
+                <FiatToCryptoWidget
+                  provider="ramp"
+                  fiatCurrency="USD"
+                  cryptoCurrency="MATIC"
+                  onSuccess={handlePurchaseSuccess}
+                  onError={handlePurchaseError}
+                  style={[styles.widgetButton, styles.cryptoButton]}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
 
       {/* WebView Modal */}
       <Modal
@@ -509,10 +694,145 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   providersTitle: {
-    fontSize: 20,
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  featuredProvidersSection: {
+    marginBottom: 32,
+  },
+  sectionTitle: {
+    fontSize: 18,
     fontWeight: '600',
     color: '#333',
     marginBottom: 16,
+  },
+  providerWidget: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  providerInfo: {
+    marginBottom: 16,
+  },
+  providerName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 8,
+  },
+  providerDescription: {
+    fontSize: 14,
+    color: '#666',
+    lineHeight: 20,
+  },
+  widgetButton: {
+    backgroundColor: '#676FFF',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+  },
+  smallButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    minWidth: 80,
+  },
+  additionalOptionsSection: {
+    marginBottom: 32,
+  },
+  optionCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  optionIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#f8f9fa',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+  },
+  optionContent: {
+    flex: 1,
+  },
+  optionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 4,
+  },
+  optionDescription: {
+    fontSize: 14,
+    color: '#666',
+  },
+  optionActions: {
+    marginLeft: 12,
+  },
+  cryptoOptionsSection: {
+    marginBottom: 32,
+  },
+  cryptoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+    justifyContent: 'space-between',
+  },
+  cryptoCard: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 16,
+    width: '48%',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#e9ecef',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  cryptoEmoji: {
+    fontSize: 32,
+    marginBottom: 8,
+  },
+  cryptoSymbol: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 4,
+  },
+  cryptoName: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  cryptoButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    minWidth: 60,
   },
   providerCard: {
     backgroundColor: '#fff',
@@ -535,19 +855,6 @@ const styles = StyleSheet.create({
   providerLogo: {
     fontSize: 32,
     marginRight: 12,
-  },
-  providerInfo: {
-    flex: 1,
-  },
-  providerName: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 2,
-  },
-  providerDescription: {
-    fontSize: 14,
-    color: '#666',
   },
   providerDetails: {
     paddingLeft: 44,
