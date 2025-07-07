@@ -16,6 +16,15 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(express.json());
 
+// Health check route
+app.get("/", (req, res) => {
+  res.json({ 
+    message: "🚀 InWallet API Server is running!", 
+    status: "healthy",
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/wallet", walletRoutes);
 app.use("/api/merchant", merchantRoutes);
