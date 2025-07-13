@@ -1,0 +1,122 @@
+{
+  "common": {
+    "balance": "Balance",
+    "send": "Send",
+    "receive": "Receive",
+    "topUp": "Top Up",
+    "withdraw": "Withdraw",
+    "scan": "Scan",
+    "pay": "Pay",
+    "more": "More",
+    "apply": "Apply",
+    "reset": "Reset",
+    "share": "Share",
+    "downloadReceipt": "Download Receipt",
+    "sharing": "Sharing...",
+    "downloading": "Downloading...",
+    "shareSuccess": "Receipt shared successfully",
+    "shareError": "Failed to share receipt",
+    "downloadSuccess": "Receipt downloaded successfully",
+    "downloadError": "Failed to download receipt"
+  },
+  "home": {
+    "title": "IN WALLET",
+    "totalBalance": "Total Balance",
+    "quickActions": "Quick Actions",
+    "recentTransactions": "Recent Transactions",
+    "noTransactions": "No recent transactions"
+  },
+  "wallet": {
+    "title": "Wallet",
+    "cryptoPrice": "BTC Price",
+    "availableBalance": "Available Balance",
+    "services": "Services",
+    "bankIntegration": "Bank Integration",
+    "payLaterQR": "PayLater QR",
+    "payLaterLimit": "PayLater Limit",
+    "ecommercePayment": "Ecommerce Payment",
+    "insurance": "Insurance",
+    "walletMeter": "Wallet Meter"
+  },
+  "qr": {
+    "scanQRCode": "Scan QR Code Here",
+    "showMyQR": "Show My QR Code",
+    "promoText": "Win an iPhone 15 & Free Coins up to 200K",
+    "appOnly": "InWallet App Only"
+  },
+  "profile": {
+    "title": "Profile",
+    "registerMerchant": "Register as Merchant",
+    "showQRCode": "Show My QR Code",
+    "myProfile": "My Profile",
+    "editProfile": "Edit Profile",
+    "myBills": "My Bills",
+    "dailyRewards": "Daily Rewards",
+    "inviteFriends": "Invite Friends",
+    "myVouchers": "My Vouchers",
+    "verification": "Verification",
+    "walletMeter": "Wallet Meter",
+    "paymentMethods": "Payment Methods",
+    "settings": "Settings",
+    "badges": {
+      "verifyNow": "Verify Now",
+      "freeAdmin": "Free admin fee",
+      "coins": "50K coins",
+      "bonus": "Bonus up to 1M!",
+      "seeScore": "See your score"
+    }
+  },
+  "history": {
+    "title": "History",
+    "filters": "Filters",
+    "searchPlaceholder": "Search transactions...",
+    "noTransactions": "No transactions yet",
+    "noSearchResults": "No matching transactions found",
+    "tryDifferentSearch": "Try a different search term",
+    "transactionsWillAppear": "Your transactions will appear here",
+    "dateRange": "Date Range",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "datePresets": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "last7days": "Last 7 Days",
+      "last30days": "Last 30 Days",
+      "thisMonth": "This Month",
+      "lastMonth": "Last Month",
+      "custom": "Custom Range"
+    },
+    "transactionType": "Transaction Type",
+    "types": {
+      "all": "All Transactions",
+      "sent": "Send Money",
+      "received": "Receive Money",
+      "qr_payment": "QR Payment",
+      "bill_payment": "Bill Payment",
+      "topup": "Top Up",
+      "withdraw": "Withdraw"
+    },
+    "status": {
+      "title": "Status",
+      "all": "All Status",
+      "success": "Success",
+      "pending": "Pending",
+      "failed": "Failed"
+    },
+    "amountRange": "Amount Range",
+    "minAmount": "Min Amount",
+    "maxAmount": "Max Amount",
+    "transactionDetail": "Transaction Detail",
+    "details": "Transaction Details",
+    "reference": "Reference Number",
+    "description": "Description",
+    "category": "Category",
+    "fees": "Transaction Fee",
+    "exchangeRate": "Exchange Rate",
+    "recipient": "Recipient Details",
+    "sender": "Sender Details",
+    "name": "Name",
+    "accountNumber": "Account Number",
+    "bankName": "Bank Name"
+  }
+} 

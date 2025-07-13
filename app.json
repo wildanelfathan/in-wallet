@@ -1,29 +1,42 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "InWallet",
+    "slug": "inwallet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wildanelfathan.inwallet"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "package": "com.wildanelfathan.inwallet"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme": "inwallet",
+    "sdkVersion": "50.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "eba117c1-0c14-4759-a196-a6225c9b6ebe"
+      }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
