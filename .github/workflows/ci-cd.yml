@@ -68,7 +68,7 @@ jobs:
 
       - name: Setup Expo
         run: |
-          echo ${{ secrets.EXPO_TOKEN }} | eas login --non-interactive
+          echo PR7gDUfsqveNIYjPZ6ha1Vc713eISQh0ZaKV7zsm | eas login --non-interactive
 
       - name: Build Android APK
         run: eas build --platform android --profile preview --non-interactive
@@ -100,7 +100,7 @@ jobs:
 
       - name: Setup Expo
         run: |
-          echo ${{ secrets.EXPO_TOKEN }} | eas login --non-interactive
+          echo PR7gDUfsqveNIYjPZ6ha1Vc713eISQh0ZaKV7zsm | eas login --non-interactive
 
       - name: Build iOS
         run: eas build --platform ios --profile preview --non-interactive
@@ -129,7 +129,7 @@ jobs:
 
       - name: Setup Expo
         run: |
-          echo ${{ secrets.EXPO_TOKEN }} | eas login --non-interactive
+          echo PR7gDUfsqveNIYjPZ6ha1Vc713eISQh0ZaKV7zsm | eas login --non-interactive
 
       - name: Publish updates
         run: eas update --branch production --message "Auto-deploy from CI/CD"
