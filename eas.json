@@ -14,6 +14,7 @@
       }
     },
     "preview": {
+      "developmentClient": false,
       "distribution": "internal",
       "ios": {
         "resourceClass": "m-medium"
@@ -44,4 +45,4 @@
       }
     }
   }
-} 
+}
