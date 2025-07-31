@@ -18,28 +18,51 @@ interface AIResponse {
 export class AIService {
   private apiKey: string;
   private baseUrl: string;
+  private model: string;
 
   constructor() {
     this.apiKey = process.env.AI_API_KEY || '';
     this.baseUrl = process.env.AI_BASE_URL || 'https://api.openai.com/v1';
+    this.model = process.env.AI_MODEL || 'gpt-3.5-turbo';
   }
 
   async processMessage(message: string, userId: string, context?: any): Promise<AIResponse> {
     try {
-      // TODO: Integrate with actual AI model (OpenAI, Hugging Face, or local model)
-      // For now, return a simple response based on message content
-      
+      // Call OpenAI API for real AI response
+      const response = await axios.post(
+        `${this.baseUrl}/chat/completions`,
+        {
+          model: this.model,
+          messages: [
+            { role: 'system', content: 'Kamu adalah Travas, asisten AI lokal Indonesia. Jawab dengan bahasa Indonesia yang ramah dan kontekstual.' },
+            { role: 'user', content: message }
+          ],
+          user: userId,
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const aiText = response.data.choices[0].message.content.trim();
+      return {
+        text: aiText,
+        context: {},
+        suggestions: [],
+        confidence: 1.0,
+      };
+    } catch (error) {
+      console.error('Error processing message with OpenAI, fallback to rule-based:', error?.response?.data || error);
+      // Fallback to rule-based response
       const response = await this.generateResponse(message, context);
-      
       return {
         text: response.text,
         context: response.context,
         suggestions: response.suggestions,
         confidence: response.confidence
       };
-    } catch (error) {
-      console.error('Error processing message with AI:', error);
-      throw new Error('Terjadi kesalahan dalam memproses pesan dengan AI');
     }
   }
 
