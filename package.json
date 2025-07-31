@@ -1,28 +1,35 @@
 {
-  "name": "in-wallet-backend",
+  "name": "travas-app",
   "version": "1.0.0",
+  "description": "Travas - Asisten AI Lokal Indonesia",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "prisma": "prisma",
-    "postinstall": "prisma generate && npm run build"
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "start": "cd backend && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@prisma/client": "^6.11.1",
-    "@vercel/node": "^5.3.2",
-    "cors": "^2.8.5",
-    "dotenv": "^17.0.1",
-    "express": "^4.18.2"
-  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "indonesia",
+    "local",
+    "assistant",
+    "react",
+    "nodejs"
+  ],
+  "author": "Travas Team",
+  "license": "MIT",
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^4.17.21",
-    "typescript": "^5.8.3"
-  }
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
 }
